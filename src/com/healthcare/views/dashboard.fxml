@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.healthcare.controllers.DashboardController" prefWidth="600" prefHeight="400">
+    <!-- Top Section: Title -->
+    <top>
+        <Label text="Healthcare Dashboard" alignment="CENTER" style="-fx-font-size: 24px; -fx-font-weight: bold;" BorderPane.alignment="CENTER"/>
+    </top>
+
+    <!-- Left Section: Navigation Pane -->
+    <left>
+        <VBox spacing="10" alignment="CENTER" style="-fx-background-color: #f4f4f4; -fx-padding: 15;" BorderPane.alignment="CENTER">
+            <Button text="Manage Patients" fx:id="managePatientsButton" prefWidth="150" onAction="#handleManagePatients"/>
+            <Button text="View Appointments" fx:id="viewAppointmentsButton" prefWidth="150" onAction="#handleViewAppointments"/>
+            <Button text="Manage Health Records" fx:id="manageRecordsButton" prefWidth="150" onAction="#handleManageRecords"/>
+            <Button text="Analytics" fx:id="analyticsButton" prefWidth="150" onAction="#handleViewAnalytics"/>
+            <Separator orientation="HORIZONTAL"/>
+            <Button text="Logout" fx:id="logoutButton" prefWidth="150" onAction="#handleLogout"/>
+        </VBox>
+    </left>
+
+    <!-- Center Section: Placeholder for Dynamic Content -->
+    <center>
+        <Label fx:id="welcomeLabel" text="Welcome to the Healthcare Dashboard!" alignment="CENTER" style="-fx-font-size: 18px; -fx-text-fill: #333;" BorderPane.alignment="CENTER"/>
+    </center>
+</BorderPane>

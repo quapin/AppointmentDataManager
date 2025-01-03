@@ -4,10 +4,15 @@ import com.healthcare.utils.AuthenticationService;
 import com.healthcare.DatabaseManager;
 import com.healthcare.utils.HashingUtil;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class LoginController {
@@ -42,9 +47,9 @@ public class LoginController {
         try{
             boolean isAuthenticated = authService.authenticateUser(username, HashingUtil.hashPassword(password));
             if(isAuthenticated){
-                showInfo("Login Successful", "Welcome " + username + "!");
+                //showInfo("Login Successful", "Welcome " + username + "!");
 
-                //TODO: Navigate dashboard based on user role.
+                navigateToDashboard(username, authService.getUserRole(username));
             } else{
                 showError("Login Failed", "Invalid username or password");
             }
@@ -65,5 +70,23 @@ public class LoginController {
         alert.setTitle(title);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void navigateToDashboard(String username, String role){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/healthcare/views/dashboard.fxml"));
+            Parent root = loader.load();
+
+            DashboardController controller = loader.getController();
+            controller.setUser(username, role);
+
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Healthcare Dashboard");
+            stage.show();
+        }catch (IOException e){
+            showError("Error", "An error occurred while navigating to dashboard");
+            e.printStackTrace();
+        }
     }
 }

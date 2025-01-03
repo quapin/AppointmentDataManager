@@ -2,13 +2,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.healthcare.controllers.LoginController" prefWidth="400" prefHeight="250">
+<VBox xmlns:fx="http://javafx.com/fxml" alignment="CENTER" fx:controller="com.healthcare.controllers.LoginController" prefWidth="600" prefHeight="400">
     <children>
-        <Label text="Login" layoutX="160" layoutY="30" style="-fx-font-size: 18px;" />
+        <Label text="Login" layoutX="300" layoutY="30" style="-fx-font-size: 18px;" />
         <Label text="Username:" layoutX="50" layoutY="80" />
         <TextField fx:id="usernameField" layoutX="130" layoutY="80" prefWidth="200" />
         <Label text="Password:" layoutX="50" layoutY="120" />
         <PasswordField fx:id="passwordField" layoutX="130" layoutY="120" prefWidth="200" />
         <Button text="Login" layoutX="160" layoutY="170" onAction="#handleLoginAction" />
     </children>
-</AnchorPane>
+</VBox>

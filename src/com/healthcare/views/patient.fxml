@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.healthcare.controllers.PatientController" prefWidth="600" prefHeight="400">
+    <!-- Top Section: Title -->
+    <top>
+        <Label text="Manage Patients" alignment="CENTER" style="-fx-font-size: 24px; -fx-font-weight: bold;" BorderPane.alignment="CENTER"/>
+    </top>
+
+    <!-- Center Section: TableView for Patients -->
+    <center>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 15;">
+            <TableView fx:id="patientTable" prefHeight="400" prefWidth="700">
+                <columns>
+                    <TableColumn fx:id="idColumn" text="ID" prefWidth="100"/>
+                    <TableColumn fx:id="nameColumn" text="Name" prefWidth="200"/>
+                    <TableColumn fx:id="ageColumn" text="Age" prefWidth="100"/>
+                    <TableColumn fx:id="contactColumn" text="Contact" prefWidth="200"/>
+                </columns>
+            </TableView>
+
+            <!-- Buttons for Actions -->
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Add Patient" fx:id="addPatientButton" onAction="#handleAddPatient"/>
+                <Button text="Edit Patient" fx:id="editPatientButton" onAction="#handleEditPatient"/>
+                <Button text="Delete Patient" fx:id="deletePatientButton" onAction="#handleDeletePatient"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">
+                <Button text="Back" onAction="#handleBack" />
+            </HBox>
+
+        </VBox>
+    </center>
+</BorderPane>

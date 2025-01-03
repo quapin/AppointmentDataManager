@@ -4,13 +4,20 @@ import com.healthcare.utils.HashingUtil;
 
 public class DatabaseManager {
     private static final String DB_URL = "jdbc:sqlite:C:\\Users\\etho1\\IdeaProjects\\AppointmentDataManager\\src\\com\\healthcare\\resources\\healthcare.db";
-
+    private static DatabaseManager instance;
     private Connection connection;
 
     public DatabaseManager() throws SQLException{
         // Database Connection
         connect();
         initializeDatabase();
+    }
+
+    public static synchronized DatabaseManager getInstance() throws SQLException{
+        if (instance == null){
+            instance = new DatabaseManager();
+        }
+        return instance;
     }
 
     public Connection getConnection(){
@@ -22,7 +29,10 @@ public class DatabaseManager {
 
     private void connect() throws SQLException{
         connection = DriverManager.getConnection(DB_URL);
-        System.out.println("Connection to SQLite established.");
+        try(Statement stmt = connection.createStatement()){
+            stmt.execute("PRAGMA journal_mode=WAL;");
+        }
+        System.out.println("Connection to SQLite established (WAL mode).");
     }
 
     public void closeConnection() {
@@ -105,7 +115,7 @@ public class DatabaseManager {
         }
     }
 
-    public void addPatient(String name, int age, String contact) throws SQLException{
+    public synchronized void addPatient(String name, int age, String contact) throws SQLException{
         String sql = """
                 INSERT INTO patients (name, age, contact) VALUES (?, ?, ?);
                 """;
@@ -117,6 +127,7 @@ public class DatabaseManager {
             System.out.println("Patient added successfully.");
         } catch(SQLException e){
             System.err.println("Failed to add patient: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -268,13 +279,13 @@ public class DatabaseManager {
 
     public ResultSet fetchUserByUsername(String username) throws SQLException{
         String sql = "SELECT * FROM users WHERE username = ?";
-        try(PreparedStatement pstmt = connection.prepareStatement(sql)){
-            pstmt.setString(1, username);
-            return pstmt.executeQuery();
-        } catch(SQLException e){
-            System.err.println("Failed to fetch user: " + e.getMessage());
-            return null;
-        }
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, username);
+
+        System.out.println("Executing query: " + sql);
+        System.out.println("Parameters: " + username);
+
+        return pstmt.executeQuery();
     }
 
     public ResultSet fetchAppointmentsByPatientId(int patientId) throws SQLException{

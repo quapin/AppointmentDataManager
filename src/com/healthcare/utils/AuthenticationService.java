@@ -15,11 +15,20 @@ public class AuthenticationService{
     // Verify password matches hashed password.
     public boolean authenticateUser(String username, String password) throws SQLException{
         String hashedPassword = HashingUtil.hashPassword(password);
+        System.out.println("Provided Hashed Password: " + hashedPassword);
+
         ResultSet rs = dbManager.fetchUserByUsername(username);
-        if (rs.next()){
+
+        if (rs != null && rs.next()) {
             String storedPassword = rs.getString("password");
-            return storedPassword.equals(hashedPassword);
+            System.out.println("Stored Password Hash: " + storedPassword);
+
+            boolean match = storedPassword.equals(hashedPassword);
+            System.out.println("Password Match: " + match);
+            return match;
         }
+
+        System.out.println("No user found for username: " + username);
         return false;
     }
 

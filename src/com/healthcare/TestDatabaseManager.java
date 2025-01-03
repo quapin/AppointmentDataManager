@@ -13,7 +13,7 @@ public class TestDatabaseManager {
             dbManager = new DatabaseManager();
 
             // Test adding a user
-            dbManager.addUser("conch", HashingUtil.hashPassword("sigmaboy"), "provider");
+            dbManager.addUser("provider", HashingUtil.hashPassword("password"), "provider");
 
             // Test fetching all users
             ResultSet rs = dbManager.fetchAllUsers();
